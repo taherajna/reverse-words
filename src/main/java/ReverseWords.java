@@ -26,10 +26,6 @@ public class ReverseWords {
         || inputString.charAt(i) > 'z';
   }
 
-  private boolean isANumber(String inputString, int i) {
-    return inputString.charAt(i) >= '0' && inputString.charAt(i) <= '9';
-  }
-
   private int reverseWord(
       String inputString,
       int startIndex,
@@ -41,8 +37,7 @@ public class ReverseWords {
 
     for (int i = endIndex - startIndex - 1, j = 0; i >= 0 && j < endIndex - startIndex; i--) {
       char appendChar = inputString.charAt(startIndex + i);
-      if (!(isANumber(inputString, startIndex + i)
-          || isASpecialCharacter(inputString, startIndex + i))) {
+      if (!isASpecialCharacter(inputString, startIndex + i)) {
         if (isCapitalArray[j++]) {
           appendChar = Character.toUpperCase(appendChar);
         } else {
@@ -78,7 +73,7 @@ public class ReverseWords {
     for (int i = 0, j = 0; i < isCapitalArray.length; i++) {
       if (isCapitalLetter(word, startIndex + i)) {
         isCapitalArray[j++] = true;
-      } else if (!isASpecialCharacter(word, startIndex + i) && !isANumber(word, startIndex + i)) {
+      } else if (!isASpecialCharacter(word, startIndex + i)) {
         j++;
       }
     }
@@ -88,7 +83,7 @@ public class ReverseWords {
   private char[] intiliazeCharArray(String word, int startIndex, int endIndex) {
     char[] charArray = new char[endIndex - startIndex];
     for (int i = 0; i < charArray.length; i++) {
-      if (isANumber(word, startIndex + i) || isASpecialCharacter(word, startIndex + i)) {
+      if (isASpecialCharacter(word, startIndex + i)) {
         charArray[i] = word.charAt(startIndex + i);
       } else {
         charArray[i] = ' ';
