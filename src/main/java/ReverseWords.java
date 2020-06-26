@@ -1,19 +1,21 @@
 public class ReverseWords {
+
   public String reverse(String inputString) {
+    char[] reversedArray = new char[inputString.length()];
+    int reversedArrayIndex = 0;
     StringBuilder word = new StringBuilder();
-    StringBuilder reversedInput = new StringBuilder();
     for (int i = 0; i < inputString.length(); i++) {
       if (inputString.charAt(i) == ' ') {
-        reversedInput.append(reverseWord(word.toString()));
-        reversedInput.append(inputString.charAt(i));
+        reversedArrayIndex = reverseWord(word.toString(), reversedArray, reversedArrayIndex);
+        reversedArray[reversedArrayIndex++] = inputString.charAt(i);
         word = new StringBuilder();
       } else {
         word.append(inputString.charAt(i));
       }
     }
-    reversedInput.append(reverseWord(word.toString()));
+    reverseWord(word.toString(), reversedArray, reversedArrayIndex);
 
-    return reversedInput.toString();
+    return String.valueOf(reversedArray);
   }
 
   private boolean isASpecialCharacter(String inputString, int i) {
@@ -26,7 +28,7 @@ public class ReverseWords {
     return inputString.charAt(i) >= '0' && inputString.charAt(i) <= '9';
   }
 
-  private String reverseWord(String word) {
+  private int reverseWord(String word, char[] reversedArray, int reversedArrayIndex) {
     boolean[] isCapitalArray = initializeCapitalArray(word);
     char[] charArray = intiliazeCharArray(word);
 
@@ -41,7 +43,11 @@ public class ReverseWords {
         charArray[getEmptyPosition(charArray)] = appendChar;
       }
     }
-    return String.valueOf(charArray);
+    for (char c : charArray) {
+      reversedArray[reversedArrayIndex++] = c;
+    }
+
+    return reversedArrayIndex;
   }
 
   private boolean[] initializeCapitalArray(String word) {
