@@ -34,7 +34,7 @@ public class ReverseWords {
       int reversedArrayIndex) {
     boolean[] isCapitalArray = initializeCapitalArray(inputString, startIndex, endIndex);
     char[] charArray = intiliazeCharArray(inputString, startIndex, endIndex);
-
+    int startIndexForCharArray = 0;
     for (int i = endIndex - startIndex - 1, j = 0; i >= 0 && j < endIndex - startIndex; i--) {
       char appendChar = inputString.charAt(startIndex + i);
       if (!isASpecialCharacter(inputString, startIndex + i)) {
@@ -43,7 +43,9 @@ public class ReverseWords {
         } else {
           appendChar = Character.toLowerCase(appendChar);
         }
-        charArray[getEmptyPosition(charArray)] = appendChar;
+        int emptyPosition = getEmptyPosition(charArray, startIndexForCharArray);
+        startIndexForCharArray=emptyPosition;
+        charArray[emptyPosition] = appendChar;
       }
     }
     for (char c : charArray) {
@@ -57,9 +59,9 @@ public class ReverseWords {
     return word.charAt(i) >= 'A' && word.charAt(i) <= 'Z';
   }
 
-  private int getEmptyPosition(char[] charArray) {
+  private int getEmptyPosition(char[] charArray, int index) {
     int emptyPosition = 0;
-    for (int i = 0; i < charArray.length; i++) {
+    for (int i = index; i < charArray.length; i++) {
       if (charArray[i] == ' ') {
         emptyPosition = i;
         break;
